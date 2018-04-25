@@ -6,6 +6,6 @@ namespace Customers.Models.Entities
 {
     public class AuditableEntity
     {
-        DateTime CreatedDate;
+        DateTime CreationDate;
     }
 }

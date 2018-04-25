@@ -1,16 +1,15 @@
 # Visual Studio 2015 cache/options directory
 .vs/
+\.vscode/
 
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+[Oo]bj/
+[Bb]in/
 x64/
 x86/
 build/
 bld/
-bin/
-Bin/
-obj/
-Obj/
