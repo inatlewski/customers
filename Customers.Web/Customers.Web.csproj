@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Customers.BusinessLogic\Customers.BusinessLogic.csproj" />
     <ProjectReference Include="..\Customers.DataAccess\Customers.DataAccess.csproj" />
   </ItemGroup>
 
