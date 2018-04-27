@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using Customers.BusinessLogic.Interfaces;
 using Customers.Models.DTO;
 using Customers.Models.Entities;
@@ -7,18 +8,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Customers.Web.Controllers
 {
-    [ProducesResponseType(200)]
-    [ProducesResponseType(400)]
+    [Route("api/[controller]")]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
+        private readonly INoteService _noteService;
         
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService, INoteService noteService)
         {
             _customerService = customerService;
+            _noteService = noteService;
         }
 
-        [HttpGet("All")]
+        [HttpGet("all")]
         [Produces(typeof(ResponseDto<IEnumerable<Customer>>))]
         public IActionResult GetAll()
         {
@@ -27,7 +31,7 @@ namespace Customers.Web.Controllers
             return Ok(customersDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{customerId}")]
         [Produces(typeof(ResponseDto<Customer>))]
         public IActionResult GetCustomer(int customerId)
         {
@@ -36,13 +40,22 @@ namespace Customers.Web.Controllers
             return Ok(customerDto);
         }
 
-        [HttpPatch("{id}/Status")]
+        [HttpPatch("{customerId}/status")]
         [Produces(typeof(ResponseDto<Customer>))]
         public IActionResult SetCustomerStatus(int customerId, CustomerStatus customerStatus)
         {
             var customerDto = _customerService.SetCustomerStatus(customerId, customerStatus);
 
             return Ok(customerDto);
+        }
+
+        [HttpGet("{customerId}/notes")]
+        [Produces(typeof(ResponseDto<IEnumerable<Note>>))]
+        public IActionResult GetCustomerNotes(int customerId)
+        {
+            var notesDto = _noteService.GetNotesForCustomer(customerId);
+
+            return Ok(notesDto);
         }
     }
 }
