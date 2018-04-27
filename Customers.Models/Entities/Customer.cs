@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 using Customers.Models.Enums;
 
@@ -21,6 +22,7 @@ namespace Customers.Models.Entities
 
         public CustomerStatus Status { get; set; }
 
+        [IgnoreDataMember]
         public ICollection<Note> Notes { get; set; }
 
         public Customer()

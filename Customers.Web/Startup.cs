@@ -1,6 +1,11 @@
+using System.Net;
+using Customers.BusinessLogic.Implementations;
+using Customers.BusinessLogic.Interfaces;
 using Customers.DataAccess;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +41,10 @@ namespace Customers.Web
             {
                 c.SwaggerDoc("v1", new Info { Title = "Customers API", Version = "v1"});
             });
+
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<INoteService, NoteService>();
+            services.AddScoped<IExampleDataService, ExambleDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +53,7 @@ namespace Customers.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
                     HotModuleReplacement = true
